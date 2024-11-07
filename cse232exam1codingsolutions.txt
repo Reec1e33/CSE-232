@@ -1,0 +1,772 @@
+
+				Lab 1 solution
+
+#include <iostream>
+using std::cin;
+using std::cout;
+using std::endl;
+using std::fixed;
+#include <iomanip>
+using std::setprecision;
+
+int main() {
+  // Useful constants
+  double const au_distance = 37.33;
+  double const km_per_sec = 14.33;
+  double const mi_per_sec = 8.90;
+  int const km_per_au = 149598000;
+  int const mi_per_au = 92955800;
+  double const sol_km_sec = 299792.458;
+  int const sec_in_day = 24 * 60 * 60;
+
+  // Only output two decimal places
+  cout << fixed << setprecision(2);
+
+  int days{0};
+  cin >> days;  // Read number of days
+
+  // Calculate distance traveled in kilometers
+  double const distance_km =
+      (au_distance * km_per_au) + (km_per_sec * sec_in_day * days);
+  cout << distance_km << endl;
+
+  // Calculate distance traveled in miles
+  double const distance_mi =
+      (au_distance * mi_per_au) + (mi_per_sec * sec_in_day * days);
+  cout << distance_mi << endl;
+
+  // Calculate and display travel time in hours
+  cout << 2.0 * (distance_km / sol_km_sec) / 3600 << endl;
+}
+
+Example output:
+input(5)
+5587230342.56
+3471578575.61
+10.38
+
+
+
+
+
+
+
+
+				HW 2 solutions
+
+
+1. MSU Chars
+In the file "MSU_chars/main.cpp", write a program that characters standard input and prints the number of MSU characters in it. 
+Your program should read input until the period character (.) is encountered.
+For example, if the input is MSU ROCKS., your program should output The count of letters ("MSU") is 4., 
+because the letters M, S, and U appear 4 times.
+
+#include <iostream>
+
+int main() {
+  int count = 0;
+  char c;
+  do {
+    std::cin >> c;  // Read each character
+    // Increment count if character is M, S, or U (case insensitive)
+    if (c == 'M' || c == 'S' || c == 'U' || c == 'm' || c == 's' ||c == 'u') {
+      ++count;
+    }
+  } while(c != '.');  // Stop when period is encountered
+
+  std::cout << "The count of letters (\"MSU\") is " << count << "." << std::endl;
+}
+
+Example Output:
+MSU rocks.
+The count of letters ("MSU") is 4.
+
+
+
+
+
+
+2. Reading to EOF
+Write a program in EOF_Sum/main.cpp that reads in integers from the standard input stream until there are no more values. 
+Print the sum of those integers.
+
+#include <iostream>
+
+int main() {
+  int sum{0};
+  int value{0};
+  // Read integers until end of input
+  while (std::cin >> value) {
+    sum += value;  // Add to sum
+  }
+
+  std::cout << sum << std::endl;  // Output total sum
+}
+
+Example output:
+1 2 3 4 5
+15
+
+
+
+
+
+
+
+3. Metric
+Write a program in Metric/main.cpp that reads pairs of metric distances (mm, cm, m, or km)
+from the standard input stream until there are no more values. For each pair, print if the
+first distance is larger than the second.
+
+#include <iostream>
+#include <string>
+
+int main() {
+  int value_a, value_b;
+  std::string unit_a, unit_b;
+  // Read input as pairs of values and units
+  while (std::cin >> value_a >> unit_a >> value_b >> unit_b) {
+    int a_in_mm;
+    int b_in_mm;
+
+    // Convert first distance to millimeters
+    if (unit_a == "mm") {
+      a_in_mm = value_a;
+    } else if (unit_a == "cm") {
+      a_in_mm = value_a * 10;
+    } else if (unit_a == "m") {
+      a_in_mm = value_a * 1000;
+    } else if (unit_a == "km") {
+      a_in_mm = value_a * 1000 * 1000;
+    } else {
+      std::cout << "Error!!!";
+    }
+
+    // Convert second distance to millimeters
+    if (unit_b == "mm") {
+      b_in_mm = value_b;
+    } else if (unit_b == "cm") {
+      b_in_mm = value_b * 10;
+    } else if (unit_b == "m") {
+      b_in_mm = value_b * 1000;
+    } else if (unit_b == "km") {
+      b_in_mm = value_b * 1000 * 1000;
+    } else {
+      std::cout << "Error!!!";
+    }
+
+    // Compare the two distances
+    std::string comparison{" is the same as "};
+    if (a_in_mm > b_in_mm) {
+      comparison = " is larger than ";
+    } else if (a_in_mm < b_in_mm) {
+      comparison = " is smaller than ";
+    }
+    std::cout << value_a << unit_a << comparison << value_b << unit_b << std::endl;
+  }
+}
+
+Example output:
+3 m 400 cm
+3m is larger than 400cm
+
+
+
+
+
+
+4. Smallest Diff
+Write a program in SmallestDiff/main.cpp that reads trios of integers from the standard input stream until there are no more values. 
+For each trio, print the smallest difference between the three. For example, if the three numbers are 1, 10, and 100, the smallest 
+difference is 9 (10 - 1), as (100 - 1) and (100 - 10) are both larger than 9.
+
+
+#include <iostream>
+#include <climits>
+
+int main() {
+
+  int a, b, c;
+  while (std::cin >> a >> b >> c) {
+    int smallest_diff = INT_MAX;
+    if (a >= b && a - b < smallest_diff) {
+      smallest_diff = a - b;
+    } 
+    if (a < b && b - a < smallest_diff) {
+      smallest_diff = b - a;
+    } 
+    if (a >= c && a - c < smallest_diff) {
+      smallest_diff = a - c;
+    } 
+    if (a < c && c - a < smallest_diff) {
+      smallest_diff = c - a;
+    } 
+    if (b >= c && b - c < smallest_diff) {
+      smallest_diff = b - c;
+    } 
+    if (b < c && c - b < smallest_diff) {
+      smallest_diff = c - b;
+    }
+    std::cout << "The smallest diff of " << a << ", " << b << ", and " << c 
+              << " is " << smallest_diff << "." << std::endl;
+  }
+}
+
+Example output:
+10 20 30
+The smallest diff of 10, 20, and 30 is 10.
+
+
+
+
+
+
+
+5. More Switch
+In Switch/main.cpp, I’ve included the code that is similar to the example from Week 02. This code works great at reading all 
+the characters provided to standard input until the EOF (End-Of-File) is reached. You can supply such an EOF by typing Control-d when 
+providing input from the terminal. This program reports the types of characters encountered.
+However, I need you to add one more feature. I want the program to stop reading in input if the characters “MSU” are encountered. 
+The program should then output the stats, just as if the EOF was encountered.
+
+
+#include <iostream>
+using std::cin;
+using std::cout;
+using std::endl;
+#include <iomanip>
+using std::noskipws;
+using std::setw;
+
+int main() {
+  char C;               // Input character
+  int char_count = 0,   // Number of characters in input stream
+      line_count = 0,   // Number of newlines
+      white_count = 0,  // Number of whitespace characters
+      digit_count = 0,  // Number of digits
+      other_count = 0;  // Number of other characters
+  char previous_1 = '\0';
+  char previous_2 = '\0';
+  char previous_3 = '\0';
+  cin >> noskipws;
+  // Process characters until EOF or "MSU" is found
+  while (cin >> C) {
+    ++char_count;  // Increment overall character count
+    switch (C) {   // Classify each character
+      case '\n':   // Newline
+        ++line_count;
+        [[fallthrough]]; // Added to indicate that fallthrough is expected
+      case ' ':  // White space (newline, blank or tab)
+      case '\t':
+        ++white_count;
+        break;
+      case '0':  // Decimal digit
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        ++digit_count;
+        break;
+      default:  // Other character
+        ++other_count;
+        break;
+    }
+    previous_3 = previous_2;
+    previous_2 = previous_1;
+    previous_1 = C;
+    // Break if "MSU" is detected
+    if (previous_3 == 'M' && previous_2 == 'S' && previous_1 == 'U') {
+      break;
+    }
+  }
+
+  cout << endl;
+  cout << "Newlines:   " << setw(5) << line_count << endl;
+  cout << "Whitespace: " << setw(5) << white_count << endl;
+  cout << "Digits:     " << setw(5) << digit_count << endl;
+  cout << "Other:      " << setw(5) << other_count << endl;
+  cout << "Total:      " << setw(5) << char_count << endl;
+  cout << endl;
+}
+
+Example output: 
+MSU rocks 123
+Newlines:       0
+Whitespace:     2
+Digits:         3
+Other:          5
+Total:         13
+
+
+
+
+
+
+
+			Lab 2 solution
+
+
+#include <iostream>
+
+int main() {
+  int value{0};
+  while (std::cin >> value) {
+    if (value < 0) {  // Stop if a negative number is input
+      break;
+    }
+
+    int additive_persistence{0};  // Count how many times digits are summed
+
+    // Sum the digits until a single digit is reached
+    while (value >= 10) {
+      ++additive_persistence;
+      int sum_of_digits{0};
+      while (value) {
+        sum_of_digits += value % 10;  // Extract and sum the digits
+        value /= 10;
+      }
+      value = sum_of_digits;  // Update value with the sum of digits
+    }
+
+    std::cout << additive_persistence << " " << value << std::endl;
+  }
+
+  return 0;
+}
+
+Example output:
+999
+2 9
+
+
+			Lecture Programs
+
+#include <iostream>
+#include <vector>
+
+int GetTotal(std::vector<int> numbers);
+
+double GetTotal(std::vector<double> numbers);
+
+int main() {
+  std::cout << "START" << std::endl;
+  std::vector<int> years;
+  
+  years.push_back(1855);
+  years.push_back(1776);
+  years.push_back(1999);
+
+  std::cout << "Length: " << years.size() << std::endl; 
+
+  for (int i = 0; i < static_cast<int>(years.size()); ++i) {
+    std::cout << "Pos " << i << ": " << years.at(i) << std::endl;
+  } 
+
+  int total = GetTotal(years);
+  std::cout << "Total: " << total << std::endl;
+
+  std::vector<double> temps {98.6, 100.0, 99.4};
+  GetTotal(temps);
+}
+
+double GetTotal(std::vector<double> numbers) {
+  double total{0};
+  for (double number : numbers) {
+    total += number;
+  }
+  return total;
+}
+
+int GetTotal(std::vector<int> numbers) {
+  int total{0};
+  for (int number : numbers) {
+    total += number;
+  }
+  return total;
+}
+
+
+
+
+
+
+
+
+#include <iostream>
+
+int main() {
+  int x{23};
+  int z{968721};
+  int const y{x};
+
+  int & ref{x};
+
+  std::cout << ref << std::endl;
+  ++ref;
+  std::cout << ref << std::endl;
+  std::cout << x << std::endl;
+
+  int const & c_ref{x};
+  ++x;
+
+  int * ptr{&x};
+  std::cout << ptr << std::endl;
+  std::cout << &x << std::endl;
+  std::cout << *ptr << std::endl;
+
+  int const * const ptr2{&x};
+
+
+
+}
+
+
+
+
+
+#include <iostream>
+
+int main() {
+  int x = 4;
+  double y = 3.15;
+  while (x < 100) {
+    y += 1;
+    std::cout << y;
+    double z = x + y;
+    x = z / 4;
+    std::cout << " " << x << "\n";
+    --x;
+  }
+  std::cout << y;
+}
+
+
+
+
+
+		Mock Exam solutions
+
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+
+int main() {
+    string input;
+    while(std::getline(std::cin, input)) {
+        int count = 0;
+        for (char ch : input) {
+            if (ch == 'a') {
+                count++;
+            }
+        }
+        cout << count << endl;
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+void action()
+{
+  string act;
+  while (cin >> act) {
+    Point delta {0,0};
+
+    for (char ch : act) {
+      if (ch == 'u' || ch == 'n') {
+        ++delta.y;
+
+      } else if (ch == 'r' || ch == 'e'){
+        ++delta.x;
+
+      } else {
+        cout << "I freeze!\n";
+      }
+      
+      
+      update_display(delta);
+    }
+  }
+}
+
+And then in switch: 
+
+
+void action()
+{
+  string act;
+  while (cin >> act) {
+    Point delta {0,0};
+
+    for (char ch : act) {
+      switch (ch) {
+      case 'u': // up
+      case 'n': // north
+        ++delta.y;
+        break;
+      case 'r': // right
+      case 'e': // east
+        ++delta.x;
+        break;
+      // ... more actions ...
+      default:
+        cout << "I freeze!\n";
+      }
+      update_display(delta);
+    }
+  }
+}
+
+
+
+		Homework 3 solutions
+
+
+Additive Persistence Round 2
+In a recent lab, you were tasked with writing a program that calculated the additive root of a number. 
+This was calculated by adding the sum of each of the digits in a number. If this sum was a single digit long, 
+that was the root, otherwise you needed to repeat the process. For this homework problem you need to do much 
+the same, except instead of calculating the sum of each digit, you need to tally the sum of each pair of digits 
+to calculate the paired additive root.
+
+
+#include <iostream>
+int main() {
+  int value{0};
+  while (std::cin >> value) {
+    int root{0};
+    while (value >= 100) {
+      int sum_of_digits{0};
+      while (value) {
+        sum_of_digits += value % 10;
+        value /= 10;
+        sum_of_digits += (value % 10) * 10;
+        value /= 10;
+      }
+      value = sum_of_digits;
+    }
+    root = value;
+    std::cout << root << std::endl;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+First Letters
+I need a program (written in FirstLetters/main.cpp) that can read from standard input and 
+print only the first letter of each word. For this problem a word is defined as an sequence 
+of consecutive alphabetic (A-Za-z) character(s) separated by non-alphabetic characters(s).
+
+
+#include <iostream>
+#include <string>
+#include <cctype>
+
+using namespace std;
+
+int main() {
+    string line;
+    string output;
+    while(getline(std::cin, line)) {
+        for (int i = 0; i < line.length(); i++) {
+            if (isalpha(line[i]) && (i == 0 || !isalpha(line[i-1]))) {
+                output += line[i];
+            }
+        }
+    }
+  cout << output << endl;
+} 
+
+
+
+
+Or
+
+ 
+#include <iostream>
+#include <iomanip>
+#include <cctype>
+
+int main() {
+  std::cin >> std::noskipws;
+  char previous_character{'\0'};
+  char character{'\0'};
+  while (std::cin >> character) {
+    if (character == '\n') {
+      std::cout << std::endl;
+      previous_character = '0';
+      continue;
+    }
+    if (character > previous_character) {
+      std::cout << character;
+    } else {
+      std::cout << '_';
+    }
+    previous_character = character;
+  }
+
+  return 0;
+}
+
+
+
+
+
+
+First Letters
+I need a program (written in FirstLetters/main.cpp) that can read from standard input and print only the first 
+letter of each word. For this problem a word is defined as an sequence of consecutive alphabetic (A-Za-z)
+ character(s) separated by non-alphabetic characters(s).
+
+#include <iostream>
+#include <cctype>
+
+int main() {
+  std::cin >> std::noskipws;
+  char character;
+  bool previous_is_letter = false;
+  while (std::cin >> character) {
+    bool current_is_letter = std::isalpha(character);
+    if (!previous_is_letter && current_is_letter) {
+      std::cout << character;
+    }
+    previous_is_letter = current_is_letter;
+  }
+  return 0;
+}
+
+
+
+
+
+For to While
+In the file For2While/main.cpp there is a working program that converts standard 
+input to standard output. The exact purpose of the program isn’t important, however, 
+you need to remove all uses of the for keyword from the program. There are test cases
+ to confirm that the program’s behavior hasn’t changed as well as test cases to confirm
+ that every use of the for keyword have been removed.
+
+
+
+#include <iostream>
+#include <cctype>
+
+int main() {
+  int number_of_lines{0};
+  std::cin >> number_of_lines;
+  int line{0};
+  while (line < number_of_lines) {
+    char c{'a'};
+    c += line;
+    int element{line};
+    while (element >= 0) {
+      std::cout << static_cast<char>(c + element) << element << ' ';
+      --element;
+    }
+    std::cout << std::endl;
+    ++line;
+  }
+  return 0;
+}
+
+
+
+
+Times Tables
+Back in elementary school you likely learned your times tables, a table composed of all
+ combinations of small numbers and their values when multiplied with each other. You need 
+to write a program in TimesTable/main.cpp that takes in two pairs of integers that denote 
+the ranges of the columns and the rows (inclusive).
+
+
+
+#include <iostream>
+
+int main() {
+  int column_start, column_end, row_start, row_end;
+  std::cin >> column_start >> column_end >> row_start >> row_end;
+  for (int row = row_start; row <= row_end; ++row) {
+    for (int column = column_start; column <= column_end; ++column) {
+      std::cout << row << '*' << column << '=' << row * column;
+    
+      if (column < column_end) {
+        std::cout << ", ";
+      }
+    }
+    std::cout << std::endl;
+  }
+  return 0;
+}
+
+
+
+RemoveShortWords
+I’ve been given a list of search terms (multiple lines, separated by spaces) that I need to comb through.
+ All words of length 4 and shorter need to be removed.
+Write a program (not just a function) that reads from standard input a series of search terms. 
+This program should be in the file RemoveShortWords/main.cpp. Write to standard output only the 
+words that are length 5 or greater, in the order of the original input with trailing spaces and maintaining lines.
+
+
+
+#include <iostream>
+#include <string>
+
+std::string ShortWords(std::string input) {
+  input += "\n";
+  std::string new_line;
+  std::string word;
+  int line_length{static_cast<int>(input.size())};
+
+  for (int i{0}; i < line_length; ++i) {
+    if (!std::isspace(input.at(i))) {
+      word += input.at(i);
+    } else {
+      if (word.size() >= 5) {
+        new_line += word + " ";
+      }
+      word.clear();
+    }
+  }
+
+  return new_line;
+}
+
+int main() {
+  std::string line;
+  while (std::getline(std::cin, line)) {
+    std::cout << ShortWords(line) << std::endl;
+  }
+  return 0;
+}
+
+
+
+
+
+
