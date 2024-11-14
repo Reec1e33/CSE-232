@@ -57,6 +57,9 @@
         "condition_variable": "cpp",
         "forward_list": "cpp",
         "future": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "__tree": "cpp",
+        "map": "cpp",
+        "set": "cpp"
     }
 }
