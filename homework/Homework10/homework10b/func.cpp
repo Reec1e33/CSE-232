@@ -18,8 +18,7 @@ std::set<std::string> ReplacementCensor(
         os << " ";
     }
     std::string wordCompare = "";
-    std::string wordCompare2 = "";
-    std::string wordCompare3 = "";
+
 
     for( char ch : word){
         wordCompare += tolower(ch);
