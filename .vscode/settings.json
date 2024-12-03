@@ -60,6 +60,7 @@
         "fstream": "cpp",
         "__tree": "cpp",
         "map": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "valarray": "cpp"
     }
 }
