@@ -20,17 +20,11 @@ int Func(int a)
     }
     c = vec;
 
- 
 
     for (size_t i = 0; i < c.size(); ++i){
       b.at(i) = 2 * c.at(i) + b.at(i);
     }
 
-
-
-
-
-    
     int count = 0;
     for (size_t i = 2; i < b.size() - 2; ++i){
       if (std::to_string(b.at(i)).find("2") != std::string::npos){
